@@ -1,0 +1,84 @@
+<form [formGroup]="investmentForm" (ngSubmit)="onSubmit()">
+  <div class="input-group">
+    <p>
+      <label for="initialInvestment">Initial Investment</label>
+      <input
+        type="number"
+        required
+        id="initialInvestment"
+        name="initialInvestment"
+        [formControl]="investmentForm.controls.initialInvestment"
+      />
+      @if (investmentForm.controls.initialInvestment.invalid &&
+      (investmentForm.controls.initialInvestment.dirty ||
+      investmentForm.controls.initialInvestment.touched)) {
+      <div class="alert">
+        @if (investmentForm.controls.initialInvestment.hasError('required')) {
+        <div>Initial Investment is required.</div>
+        }
+      </div>
+      }
+    </p>
+    <p>
+      <label for="annualInvestment">Annual Investment</label>
+      <input
+        type="number"
+        required
+        id="annualInvestment"
+        name="annualInvestment"
+        [formControl]="investmentForm.controls.annualInvestment"
+      />
+      @if (investmentForm.controls.annualInvestment.invalid &&
+      (investmentForm.controls.annualInvestment.dirty ||
+      investmentForm.controls.annualInvestment.touched)) {
+      <div class="alert">
+        @if (investmentForm.controls.annualInvestment.hasError('required')) {
+        <div>Annual Investment is required.</div>
+        }
+      </div>
+      }
+    </p>
+    <p>
+      <label for="interest">Expected Return</label>
+      <input
+        type="number"
+        id="interest"
+        name="interest"
+        [formControl]="investmentForm.controls.expectedReturn"
+        required
+      />
+      @if (investmentForm.controls.expectedReturn.invalid &&
+      (investmentForm.controls.expectedReturn.dirty ||
+      investmentForm.controls.expectedReturn.touched)) {
+      <div class="alert">
+        @if (investmentForm.controls.expectedReturn.hasError('required') ||
+        investmentForm.controls.expectedReturn.hasError('min')) {
+        <div>Expected Return must be a positive number.</div>
+        }
+      </div>
+      }
+    </p>
+    <p>
+      <label for="duration">Duration</label>
+      <input
+        type="number"
+        id="duration"
+        name="duration"
+        [formControl]="investmentForm.controls.duration"
+        required
+      />
+      @if (investmentForm.controls.duration.invalid &&
+      (investmentForm.controls.duration.dirty ||
+      investmentForm.controls.duration.touched)) {
+      <div class="alert">
+        @if (investmentForm.controls.duration.hasError('required')) {
+        <div>Duration is required.</div>
+        }
+      </div>
+      }
+    </p>
+  </div>
+  <p>
+    <button type="submit">Calculate</button>
+  </p>
+</form>

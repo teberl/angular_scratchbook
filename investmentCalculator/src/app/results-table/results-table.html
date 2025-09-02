@@ -1,0 +1,42 @@
+@if (tableData()?.length) {
+<table>
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>Investment Value</th>
+      <th>Interest (Year)</th>
+      <th>Total Interest</th>
+      <th>Invested Capital</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (rowData of tableData(); track $index) {
+    <tr>
+      <td>{{ rowData.year }}</td>
+      <td>
+        {{
+          rowData.totalAmountInvested
+            | currency : "EUR" : "symbol" : "1.2" : "de-DE"
+        }}
+      </td>
+      <td>
+        {{
+          rowData.valueEndOfYear | currency : "EUR" : "symbol" : "1.2" : "de-DE"
+        }}
+      </td>
+      <td>
+        {{ rowData.interest | currency : "EUR" : "symbol" : "1.2" : "de-DE" }}
+      </td>
+      <td>
+        {{
+          rowData.totalAmountInvested
+            | currency : "EUR" : "symbol" : "1.2" : "de-DE"
+        }}
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
+} @else {
+<p class="center">Please fill out the form and calculate</p>
+}

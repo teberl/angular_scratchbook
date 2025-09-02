@@ -1,0 +1,15 @@
+<form
+  id="new-ticket"
+  (ngSubmit)="onSubmit(titleInput.value, requestInput.value)"
+  #form
+>
+  <app-control label="Title">
+    <input type="text" id="title" name="title" #titleInput #input />
+  </app-control>
+  <app-control label="Request">
+    <textarea id="request" name="request" #requestInput #input></textarea>
+  </app-control>
+  <p>
+    <button appButton>Submit <span ngProjectAs="icon">→</span></button>
+  </p>
+</form>
