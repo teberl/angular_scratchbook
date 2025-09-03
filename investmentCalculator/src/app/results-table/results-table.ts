@@ -6,6 +6,7 @@ import { InvestmentService } from '../investment.service';
 @Component({
   selector: 'app-results-table',
   imports: [CurrencyPipe],
+  standalone: true,
   templateUrl: './results-table.html',
   styleUrl: './results-table.css',
 })

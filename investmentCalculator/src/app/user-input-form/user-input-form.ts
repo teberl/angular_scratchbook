@@ -10,6 +10,7 @@ import { InvestmentService } from '../investment.service';
 
 @Component({
   selector: 'app-user-input-form',
+  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './user-input-form.html',
   styleUrl: './user-input-form.css',

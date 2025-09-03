@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   output,
+  signal,
   viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -26,17 +27,24 @@ export class NewTicket implements AfterViewInit {
 
   add = output<{ title: string; text: string }>();
 
+  title = signal<string>('');
+  request = signal<string>('');
+
   ngAfterViewInit() {
     // In this lifecycle hook, the viewChild(ren) is guaranteed to be available
     console.log('ngAfterViewInit');
     console.log(this.form().nativeElement);
   }
 
-  onSubmit(title: string, text: string) {
-    // Handle form submission
-    console.log('Form submitted');
+  onSubmit() {
+    if (this.form().nativeElement.checkValidity() === false) {
+      return;
+    }
+    // use the template variable to reset the form => #form
+    // this.form().nativeElement.reset();
+    this.add.emit({ title: this.title(), text: this.request() });
 
-    this.form().nativeElement.reset();
-    this.add.emit({ title, text });
+    this.title.set('');
+    this.request.set('');
   }
 }
