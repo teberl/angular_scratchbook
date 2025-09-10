@@ -23,4 +23,9 @@
       <app-tickets />
     </app-dashboard-item>
   </div>
+  <!-- <ng-template appAuth="admin">
+    <p>Should be seen by an Admin</p>
+  </ng-template> -->
+  <p *appAuth="'admin'">Should be seen by an Admin</p>
+  <p *appAuth="'guest'">Should be seen by any Guest</p>
 </main>

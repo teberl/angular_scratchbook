@@ -10,6 +10,11 @@ This repository contains various Angular projects and experiments. It serves as 
 - **angular-deep-dive:** [From Angular the complete Guide on Udemy](https://www.udemy.com/course/the-complete-guide-to-angular-2)
 - **Aspire TODO_MVC:** [coming soon](https://github.com/tastejs/todomvc)
 
+## TODOs
+
+- [PrimeNG](https://primeng.org/)
+- [TODO_MVC](github.com/tastejs/todomvc) with ASPIRE
+
 ---
 
 ## Disclaimer
