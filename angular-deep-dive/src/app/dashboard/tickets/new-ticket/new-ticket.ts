@@ -2,7 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  output,
+  inject,
   signal,
   viewChild,
 } from '@angular/core';
@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 
 import { Control } from '../../../shared/control/control';
 import { Button } from '../../../shared/button/button';
+import { TicketsService } from '../tickets.service';
 
 @Component({
   selector: 'app-new-ticket',
@@ -25,7 +26,8 @@ export class NewTicket implements AfterViewInit {
   // required is optional and we need to ensure the form element exists
   private form = viewChild.required<ElementRef<HTMLFormElement>>('form');
 
-  add = output<{ title: string; text: string }>();
+  // add = output<{ title: string; text: string }>();
+  taskService = inject(TicketsService);
 
   title = signal<string>('');
   request = signal<string>('');
@@ -42,7 +44,7 @@ export class NewTicket implements AfterViewInit {
     }
     // use the template variable to reset the form => #form
     // this.form().nativeElement.reset();
-    this.add.emit({ title: this.title(), text: this.request() });
+    this.taskService.onAddTicket({ title: this.title(), text: this.request() });
 
     this.title.set('');
     this.request.set('');

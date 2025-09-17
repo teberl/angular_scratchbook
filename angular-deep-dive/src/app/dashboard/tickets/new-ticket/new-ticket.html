@@ -1,21 +1,9 @@
 <form id="new-ticket" (ngSubmit)="onSubmit()" #form>
   <app-control label="Title">
-    <input
-      type="text"
-      id="title"
-      name="title"
-      #input
-      [(ngModel)]="title"
-      required
-    />
+    <input type="text" id="title" name="title" [(ngModel)]="title" required />
   </app-control>
   <app-control label="Request">
-    <textarea
-      id="request"
-      name="request"
-      #input
-      [(ngModel)]="request"
-    ></textarea>
+    <textarea id="request" name="request" [(ngModel)]="request"></textarea>
   </app-control>
   <p>
     <button appButton>Submit <span ngProjectAs="icon">→</span></button>

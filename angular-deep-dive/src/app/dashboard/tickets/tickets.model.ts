@@ -3,4 +3,6 @@ export interface Ticket {
   title: string;
   description: string;
   status: 'open' | 'closed';
+  createdAt: Date;
+  completedAt?: Date;
 }

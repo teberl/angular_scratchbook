@@ -1,8 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { NewTicket } from './new-ticket/new-ticket';
-import { TicketComponent as TicketComponent } from './ticket/ticket';
-import { Ticket } from './tickets.model';
+import { TicketComponent } from './ticket/ticket';
+import { TicketsService } from './tickets.service';
 
 @Component({
   selector: 'app-tickets',
@@ -10,26 +10,12 @@ import { Ticket } from './tickets.model';
   imports: [NewTicket, TicketComponent],
   templateUrl: './tickets.html',
   styleUrl: './tickets.css',
+  // Element service injection scope, the service is only available to this component and its children
+  // adding a second component that also provides the service would create a separate instance of the service
+  providers: [TicketsService],
 })
 export class Tickets {
-  tickets = signal<Ticket[]>([]);
+  private ticketService = inject(TicketsService);
 
-  onAddTicket(ticket: { title: string; text: string }) {
-    const newTicket: Ticket = {
-      title: ticket.title,
-      description: ticket.text,
-      id: Math.random().toString(),
-      status: 'open',
-    };
-
-    this.tickets.update((tickets) => [...tickets, newTicket]);
-  }
-
-  onCloseTicket(id: string) {
-    this.tickets.update((tickets) =>
-      tickets.map((ticket) =>
-        ticket.id === id ? { ...ticket, status: 'closed' } : ticket
-      )
-    );
-  }
+  tickets = this.ticketService.allTickets;
 }

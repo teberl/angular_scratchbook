@@ -7,7 +7,7 @@
       }"
     ></div>
     <button (click)="onToggleDetails()">
-      <span class="text">{{ data().title }}</span>
+      <span class="text">{{ data().title | ticketTitle }}</span>
       <span>
         @if (isDetailsVisible() === true) {
         <svg
@@ -49,4 +49,8 @@
   @if (data().status === 'open') {
   <p><button (click)="onMarkAsComplete()">Mark as completed</button></p>
   } }
+  <p>Created at: {{ data().createdAt | date: 'medium' }}</p>
+  @if (data().completedAt) {
+  <p>Completed at: {{ data().completedAt | date }}</p>
+  }
 </article>
