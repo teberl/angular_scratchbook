@@ -1,7 +1,13 @@
 <app-places-container title="Available Places">
-  @if (places()) {
-  <app-places [places]="places()!" />
-  } @else if (places()?.length === 0) {
+  @if(error()) {
+  <p class="fallback-text">Failed to load places. Please try again later.</p>
+  } @else if (isLoading()) {
+  <p class="fallback-text">Loading available places...</p>
+  } @else { @defer (when places()) { @if ((places() ?? []).length > 0) {
+  <app-places [places]="places()!" (selectPlace)="onSelectPlace($event)" />
+  } @else {
   <p class="fallback-text">Unfortunately, no places could be found.</p>
-  }
+  } } @placeholder {
+  <p class="fallback-text">Loading available places...</p>
+  } }
 </app-places-container>
