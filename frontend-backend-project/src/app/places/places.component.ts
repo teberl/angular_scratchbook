@@ -4,8 +4,8 @@ import { Place } from './place.model';
 
 @Component({
   selector: 'app-places',
-  standalone: true,
   imports: [],
+  standalone: true,
   templateUrl: './places.component.html',
   styleUrl: './places.component.css',
 })
