@@ -1,9 +1,7 @@
 <app-places-container title="Your Favorite Places">
-  @if (error()) {
-  <p class="fallback-text">{{ error() }}</p>
-  } @else if (isLoading()) {
+  @if (isLoading()) {
   <p class="fallback-text">Loading your places...</p>
-  } @else { @defer (when places()) { @if ((places() ?? []).length > 0) {
+  } @else { @defer (when places()) { @if (places().length > 0) {
   <app-places [places]="places()!" (selectPlace)="onDeletePlace($event)" />
   } @else {
   <p class="fallback-text">You have no places yet. Maybe add some?</p>

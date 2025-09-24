@@ -5,6 +5,7 @@ import { Place } from '../place.model';
 import { PlacesComponent } from '../places.component';
 import { PlacesContainerComponent } from '../places-container/places-container.component';
 import { catchError, map, throwError } from 'rxjs';
+import { PlacesService } from '../places.service';
 
 @Component({
   selector: 'app-available-places',
@@ -19,34 +20,17 @@ export class AvailablePlacesComponent implements OnInit {
   isLoading = signal(false);
   private destroyRef = inject(DestroyRef);
 
-  private httpClient = inject(HttpClient);
+  private placesService = inject(PlacesService);
 
   ngOnInit() {
-    this.isLoading.set(true);
-    const subscription = this.httpClient
-      .get<{ places: Place[] }>('http://localhost:3000/places')
-      .pipe(
-        map((resData) => resData.places),
-        catchError((errorRes) => {
-          console.error('HTTP error occurred:', errorRes);
-          return throwError(() => new Error('Failed to load places'));
-        })
-      )
-      .subscribe({
-        next: (places) => {
-          console.log(places);
-          this.places.set(places);
-          this.error.set(null);
-        },
-        error: (err: Error) => {
-          console.error('Error loading places:', err);
-          this.error.set('Failed to load places');
-        },
-        complete: () => {
-          console.log('Request completed');
-          this.isLoading.set(false);
-        },
-      });
+    const subscription = this.placesService.loadAvailablePlaces().subscribe({
+      next: (places) => {
+        this.places.set(places);
+      },
+      error: (error) => {
+        this.error.set(error.message);
+      },
+    });
 
     this.destroyRef.onDestroy(() => {
       subscription.unsubscribe();
@@ -54,15 +38,12 @@ export class AvailablePlacesComponent implements OnInit {
   }
 
   onSelectPlace(place: Place) {
-    this.httpClient
-      .put(`http://localhost:3000/user-places`, { placeId: place.id })
-      .subscribe({
-        next: (userPlaces) => {
-          console.log('User places updated:', userPlaces);
-        },
-        error: (err) => {
-          console.error('Error updating user places:', err);
-        },
-      });
+    const subscription = this.placesService
+      .addPlaceToUserPlaces(place)
+      .subscribe();
+
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
+    });
   }
 }
