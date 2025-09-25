@@ -11,11 +11,11 @@ import { debounceTime } from 'rxjs';
 @Component({
   selector: 'app-login',
   standalone: true,
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  templateUrl: './loginWithTemplateForms.component.html',
+  styleUrl: './login.css',
   imports: [FormsModule],
 })
-export class LoginComponent {
+export class LoginWithTemplateFormsComponent {
   private loginForm = viewChild<NgForm>('loginForm');
   private destroyRef = inject(DestroyRef);
 
