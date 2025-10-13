@@ -4,10 +4,11 @@ import { UserComponent } from './user/user.component';
 import { UsersService } from './users.service';
 
 @Component({
-    selector: 'app-users',
-    templateUrl: './users.component.html',
-    styleUrl: './users.component.css',
-    imports: [UserComponent]
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrl: './users.component.css',
+  standalone: true,
+  imports: [UserComponent],
 })
 export class UsersComponent {
   private usersService = inject(UsersService);
