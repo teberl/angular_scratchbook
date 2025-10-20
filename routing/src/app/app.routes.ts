@@ -8,7 +8,6 @@ import {
   UserTasksComponent,
 } from './users/user-tasks/user-tasks.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { userRoutes } from './users/users.routes';
 
 const dummyCanMatch: CanMatchFn = (_route, _segments) => {
   const router = inject(Router);
@@ -32,7 +31,10 @@ export const appRoutes: Routes = [
   {
     path: 'users/:userId',
     component: UserTasksComponent,
-    children: userRoutes,
+    // children: userRoutes,
+    loadChildren: () =>
+      import('./users/users.routes').then((m) => m.userRoutes),
+    // canActivate: [dummyCanActivate],
     // static data
     canMatch: [dummyCanMatch],
     data: {
