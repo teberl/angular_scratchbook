@@ -1,31 +1,31 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
-import { CounterService } from '../counter.service';
+import {
+  selectCount,
+  selectCounterFeature,
+  selectDoubleCount,
+} from '../counter-store/counter.selector';
 
 @Component({
   standalone: true,
   selector: 'app-counter-output',
-  imports: [],
+  imports: [AsyncPipe],
   templateUrl: './counter-output.html',
   styleUrl: './counter-output.css',
 })
-export class CounterOutput implements OnInit {
-  counter = 0;
-  counterServiceSub?: Subscription;
+export class CounterOutput {
+  counterStore = inject(Store<{ counter: number }>);
 
-  private counterService = inject(CounterService);
-  private destroyRef = inject(DestroyRef);
+  test$: Observable<number>;
+  count$: Observable<number>;
+  doubleCount$: Observable<number>;
 
-  ngOnInit(): void {
-    this.counterServiceSub = this.counterService.counterChanged.subscribe(
-      (newVal) => (this.counter = newVal)
-    );
-
-    this.destroyRef.onDestroy(() => {
-      if (this.counterServiceSub) {
-        this.counterServiceSub.unsubscribe();
-      }
-    });
+  constructor() {
+    this.test$ = this.counterStore.select(selectCounterFeature);
+    this.count$ = this.counterStore.select(selectCount);
+    this.doubleCount$ = this.counterStore.select(selectDoubleCount);
   }
 }

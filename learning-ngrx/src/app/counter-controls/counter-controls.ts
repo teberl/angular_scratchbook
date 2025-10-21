@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
 
-import { CounterService } from '../counter.service';
+import { CounterState } from '../counter-store/counter.reducer';
+import { CounterActions } from '../counter-store/counter.actions';
 
 @Component({
   standalone: true,
@@ -10,13 +12,13 @@ import { CounterService } from '../counter.service';
   styleUrl: './counter-controls.css',
 })
 export class CounterControls {
-  private counterService = inject(CounterService);
+  counterStore = inject(Store<CounterState>);
 
   increment() {
-    this.counterService.increment();
+    this.counterStore.dispatch<CounterActions>({ type: '[Counter] Increment', value: 10 });
   }
 
   decrement() {
-    this.counterService.decrement();
+    this.counterStore.dispatch<CounterActions>({ type: '[Counter] Decrement', value: 5 });
   }
 }
