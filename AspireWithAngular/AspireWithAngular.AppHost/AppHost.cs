@@ -7,7 +7,7 @@ var apiService = builder.AddProject<Projects.AspireWithAngular_ApiService>("apis
 builder.AddNpmApp("angular", "../AspireWithAngular.Web")
     .WithReference(apiService)
     .WaitFor(apiService)
-    .WithHttpEndpoint(env: "PORT")
+    .WithHttpEndpoint(port: 5200, env: "PORT")
     .WithExternalHttpEndpoints()
     .PublishAsDockerFile();
 

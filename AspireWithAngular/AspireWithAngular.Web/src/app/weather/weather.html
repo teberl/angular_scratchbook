@@ -1,0 +1,23 @@
+<div class="weather-container">
+  <h2>Weather Forecast</h2>
+  
+  @if (loading()) {
+    <p>Loading weather data...</p>
+  }
+  
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+  
+  @if (!loading() && !error()) {
+    <ul class="weather-list">
+      @for (forecast of forecasts(); track forecast.date) {
+        <li class="weather-item">
+          <span class="date">{{ forecast.date | date:'short' }}</span>
+          <span class="temp">{{ forecast.temperatureC }}°C / {{ forecast.temperatureF }}°F</span>
+          <span class="summary">{{ forecast.summary }}</span>
+        </li>
+      }
+    </ul>
+  }
+</div>
